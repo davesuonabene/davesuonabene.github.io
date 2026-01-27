@@ -1,14 +1,24 @@
 <ul class="card-text font-weight-light list-group list-group-flush">
   {% assign work = data[1] | sort: 'startDate' | reverse %}
-  {% for content in work %}
+  {% assign main_work = work | where_exp: 'item', 'item.highlights and item.highlights.size > 0' %}
+  {% assign other_work = work | where_exp: 'item', 'item.highlights == empty' %}
+
+  {%- comment -%}
+    Main experiences (with bullet points / highlights)
+  {%- endcomment -%}
+  {% for content in main_work %}
     <li class="list-group-item">
       <div class="row">
         <div class="col-xs-2 cl-sm-2 col-md-2 text-center date-column">
           {% if content.startDate %}
             {% assign startDate = content.startDate | split: '-' | slice: 0, 2 | join: '.' %}
             {% assign endDate = content.endDate | split: '-' | slice: 0, 2 | join: '.' | default: 'Present' %}
-            {% assign date = startDate | append: ' - ' %}
-            {% assign date = date | append: endDate %}
+            {% if content.endDate and content.startDate == content.endDate %}
+              {% assign date = startDate %}
+            {% else %}
+              {% assign date = startDate | append: ' - ' %}
+              {% assign date = date | append: endDate %}
+            {% endif %}
           {% else %}
             {% assign date = '' %}
           {% endif %}
@@ -49,4 +59,64 @@
       </div>
     </li>
   {% endfor %}
+
+  {%- comment -%}
+    Condensed "Other experiences" list for single-line roles (without highlights)
+  {%- endcomment -%}
+  {% if other_work and other_work.size > 0 %}
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-12">
+          <h6 class="title font-weight-bold ml-1 ml-md-0 mb-2">Other experiences</h6>
+          <ul class="items">
+            {% for content in other_work %}
+              {% if content.startDate %}
+                {% assign startDate = content.startDate | split: '-' | slice: 0, 2 | join: '.' %}
+                {% assign endDate = content.endDate | split: '-' | slice: 0, 2 | join: '.' | default: 'Present' %}
+                {% if content.endDate and content.startDate == content.endDate %}
+                  {% assign date = startDate %}
+                {% else %}
+                  {% assign date = startDate | append: ' - ' %}
+                  {% assign date = date | append: endDate %}
+                {% endif %}
+              {% else %}
+                {% assign date = '' %}
+              {% endif %}
+              {% assign location = content.location | default: 'Milano' %}
+              <li>
+                <div class="d-flex justify-content-between">
+                  <div class="text-left">
+                    {% if content.name %}
+                      <div class="font-weight-bold">
+                        {{ content.name }}
+                      </div>
+                    {% endif %}
+                    {% if content.position %}
+                      <div style="font-style: italic;">
+                        {{ content.position }}
+                      </div>
+                    {% endif %}
+                  </div>
+                  <div class="text-right">
+                    {% if date != '' %}
+                      <div>
+                        <span class="badge font-weight-bold danger-color-dark text-uppercase align-middle">
+                          {{ date }}
+                        </span>
+                      </div>
+                    {% endif %}
+                    {% if location %}
+                      <div class="location">
+                        {{ location }}
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </li>
+  {% endif %}
 </ul>

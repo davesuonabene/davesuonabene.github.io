@@ -1,0 +1,174 @@
+{
+  "basics": {
+    "name": "Davide Abou Rachid",
+    "label": "Tecnico audio e sviluppatore",
+    "email": "davide.abourachid@gmail.com",
+    "phone": "+39 342 586 5105",
+    "location": "Via del Ricordo 2, 20128 Milano (MI)"
+  },
+  "work": [
+    {
+      "name": "NAMA – Nuovo Anfiteatro Martesana",
+      "location": "Milano",
+      "position": "Tecnico audio (FOH) e Stage Manager",
+      "url": "",
+      "startDate": "2024-06",
+      "endDate": "",
+      "summary": "Fonico FOH e stage manager per concerti, dj set e conferenze.",
+      "highlights": [
+        "Gestione completa del fronte palco e coordinamento tecnico degli eventi.",
+        "Progettazione, posizionamento e calibrazione di sistemi PA, stage monitor e diffusione ambientale.",
+        "Gestione imprevisti e rapida comprensione di nuovi setup in un contesto in rapida crescita.",
+        "Responsabilità per stoccaggio, manutenzione e cura del materiale tecnico."
+      ]
+    },
+    {
+      "name": "Cyclops VR – Excalibar",
+      "location": "Milano",
+      "position": "Tecnico VR",
+      "url": "",
+      "startDate": "2023-03",
+      "endDate": "2024-06",
+      "summary": "Supporto tecnico per esperienze in realtà virtuale ed eventi privati.",
+      "highlights": [
+        "Gestione tecnica di esperienze in realtà virtuale per feste ed eventi privati.",
+        "Allestimento audio-video e supporto continuo all’utenza durante le esperienze.",
+        "Sviluppo di nuove proposte commerciali e creazione di asset per la comunicazione digitale e in loco."
+      ]
+    },
+    {
+      "name": "Besio Sound Co.",
+      "location": "",
+      "position": "Backline e tecnico audio/luci",
+      "url": "",
+      "startDate": "2025-01",
+      "endDate": "2025-12",
+      "summary": "Supporto backline e gestione tecnica audio/luci per eventi.",
+      "highlights": []
+    },
+    {
+      "name": "KBB Orchestra",
+      "location": "",
+      "position": "Tecnico audio/video e operatore TouchDesigner",
+      "url": "",
+      "startDate": "2022-01",
+      "endDate": "",
+      "summary": "Supporto tecnico audio/video e sviluppo di contenuti interattivi con TouchDesigner.",
+      "highlights": []
+    },
+    {
+      "name": "Duo Bucolico – Cascina Cotica",
+      "location": "",
+      "position": "Backline e setup palco",
+      "url": "",
+      "startDate": "2025-06",
+      "endDate": "2025-06",
+      "summary": "Supporto backline e allestimento palco per concerto.",
+      "highlights": []
+    },
+    {
+      "name": "NAMA Summer Arena",
+      "location": "",
+      "position": "Fonico FOH e Stage Manager",
+      "url": "",
+      "startDate": "2025-06",
+      "endDate": "2025-07",
+      "summary": "Gestione audio e palco per gli eventi della rassegna estiva.",
+      "highlights": []
+    },
+    {
+      "name": "Studi di registrazione (freelance)",
+      "location": "",
+      "position": "Fonico e beatmaker",
+      "url": "",
+      "startDate": "2021-01",
+      "endDate": "2024-12",
+      "summary": "Produzione musicale, recording e beatmaking per artisti e pubblicità.",
+      "highlights": []
+    }
+  ],
+  "education": [
+    {
+      "institution": "Università degli Studi di Milano",
+      "location": "Milano – Dipartimento di Informatica",
+      "area": "Informatica Musicale",
+      "studyType": "Laurea",
+      "startDate": "2019-10",
+      "endDate": "2023-04",
+      "url": "",
+      "courses": [
+        "Tesi svolta su tecniche e tecnologie per la produzione di musica attraverso l’uso di algoritmi."
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "name": "Audio e produzione",
+      "level": "",
+      "icon": "",
+      "keywords": [
+        "Ableton Live",
+        "Cubase (certificazione Steinberg 2023)",
+        "Max/MSP",
+        "Pure Data"
+      ]
+    },
+    {
+      "name": "Visual e interattivo",
+      "level": "",
+      "icon": "",
+      "keywords": [
+        "TouchDesigner",
+        "Generazione e sviluppo AI"
+      ]
+    },
+    {
+      "name": "Sviluppo",
+      "level": "",
+      "icon": "",
+      "keywords": [
+        "Programmazione Web"
+      ]
+    }
+  ],
+  "languages": [
+    {
+      "language": "Italiano",
+      "fluency": "Madrelingua",
+      "icon": "",
+      "items": []
+    },
+    {
+      "language": "Inglese",
+      "fluency": "B2",
+      "icon": "",
+      "items": []
+    }
+  ],
+  "interests": [
+    {
+      "name": "Altre informazioni",
+      "icon": "",
+      "items": [],
+      "keywords": [
+        "Patente B (con auto)",
+        "Certificazione inglese B2",
+        "Partita IVA"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Macchinette.xyz",
+      "summary": "Progetto personale audio/creativo.",
+      "url": "https://macchinette.xyz",
+      "startDate": "",
+      "endDate": "",
+      "highlights": []
+    }
+  ],
+  "meta": {
+    "version": "1.0.0",
+    "canonical": "https://davesuonabene.github.io/cv/"
+  }
+}

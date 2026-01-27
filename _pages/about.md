@@ -27,8 +27,4 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-Ciao, se non sai dove andare inizia da qui
-
-***cosa* faccio**
-
-***come* lo faccio**
+Ciao, sono Davide ma Dave suona bene.
