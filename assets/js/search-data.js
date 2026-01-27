@@ -277,7 +277,7 @@ ninja.data = [{
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/assets/pdf/example_pdf.pdf";
+            window.location.href = "/assets/pdf/Davide_Abou_Rachid_CV_2026.pdf";
           
         },
       },{id: "post-a-post-with-diagrams",
