@@ -1,0 +1,107 @@
+{
+  "basics": {
+    "name": "Davide Abou Rachid",
+    "label": "Programmatore e Tecnico del Suono",
+    "image": "",
+    "email": "davesuonabene@gmail.com",
+    "phone": "+39 342 586 5105",
+    "url": "https://davesuonabene.github.io",
+    "summary": "",
+    "location": {
+      "address": "",
+      "postalCode": "",
+      "city": "Milano",
+      "countryCode": "Italia",
+      "region": "Lombardia"
+    },
+    "profiles": [
+      {
+        "network": "Instagram",
+        "username": "so.hvrsh",
+        "url": "https://instagram.com/so.hvrsh"
+      }
+    ]
+  },
+  "work": [
+    {
+      "name": "Nuovo Anfiteatro Martesana (NAMA)",
+      "position": "Fonico FOH",
+      "url": "https://www.nuovoanfiteatromartesana.org",
+      "startDate": "01-06-2024",
+      "summary": "",
+      "highlights": ["Backline"]
+    }
+  ],
+  "volunteer": [
+    {
+      "organization": "KBB Orchestra",
+      "location": "Milano, Italia",
+      "position": "Tecnico Audio e Video",
+      "url": "https://kbb.wiki",
+      "startDate": "2022",
+      "endDate": "",
+      "summary": "",
+      "highlights": [""]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Università Degli Studi Di Milano",
+      "location": "Milano, Italy",
+      "url": "https://www.unimi.it/",
+      "area": "Informatica Musicale",
+      "studyType": "Laurea Triennale",
+      "startDate": "2019",
+      "endDate": "2023",
+      "courses": ["Tesi: Generazione Procedurale di Basi Strumentali"]
+    }
+  ],
+  "skills": [
+    {
+      "name": "Audio",
+      "level": "Master",
+      "icon": "fa-solid fa-hashtag",
+      "keywords": [
+        "Montaggi e Backline Audio"
+      ]
+    }
+  ],
+  "languages": [
+    {
+      "language": "Italiano",
+      "fluency": "Madrelingua",
+      "icon": ""
+    },
+    {
+      "language": "Inglese",
+      "fluency": "Fluente",
+      "icon": ""
+    }
+  ],
+  "interests": [
+    {
+      "name": "Physics",
+      "icon": "fa-solid fa-tag",
+      "keywords": [
+        "Musica Procedurale"
+      ]
+    }
+  ],
+  "references": [
+    {
+      "name": "Professor John Doe",
+      "icon": "fa-solid fa-laptop",
+      "reference": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam condimentum, diam quis convallis euismod, arcu mi ullamcorper lorem, a vestibulum nunc magna at sem. Sed in risus ac felis varius blandit. D"
+    }
+  ],
+  "projects": [
+    {
+      "name": "Quantum Computing",
+      "summary": "Quantum computing is the use of quantum-mechanical phenomena such as superposition and entanglement to perform computation. Computers that perform quantum computations are known as quantum computers.",
+      "highlights": ["Quantum Teleportation", "Quantum Cryptography"],
+      "startDate": "2018-01-01",
+      "endDate": "2018-01-01",
+      "url": "https://example.com"
+    }
+  ]
+}
