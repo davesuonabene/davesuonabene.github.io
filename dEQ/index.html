@@ -1,0 +1,90 @@
+<!DOCTYPE html> <html lang="it"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> dEQ | Dave Suona Bene </title> <meta name="author" content="Dave Suona Bene"> <meta name="description" content="Project Highlight: Dynamic EQ Eight for Ableton Live (Max for Live)."> <meta name="keywords" content="dave suona bene, davesuonabene, audio, video, code, projects, audio‑visivi, audio‑visual, audio‑visual projects, audio‑visual code, audio‑visual projects code"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://davesuonabene.github.io/dEQ/"> <script src="/assets/js/theme.js?2514b02951c01ec2117e521042b091b9"></script> <script>
+    document.documentElement.setAttribute("data-theme", "light");
+  </script> </head> <body class="spotlight-body"> <main class="spotlight-fullscreen" role="main"> <div class="spotlight-bg "> <div class="spotlight-video-wrapper"> <video autoplay loop muted playsinline preload="auto" poster="/assets/video/dEQ_HQ_169_poster.jpg" class="spotlight-video"> <source src="/assets/video/dEQ_HQ_169.webm" type="video/webm"> <source src="/assets/video/dEQ_HQ_169.mp4" type="video/mp4"> </source></source></video> </div> <div class="spotlight-overlay"></div> </div> <div class="spotlight-content-wrapper"> <div class="spotlight-hero-box"> <div class="spotlight-meta-row"> <span class="spotlight-hero-subtitle">Max for Live Device</span> </div> <h1 class="spotlight-hero-title">dEQ Eight</h1> <p class="spotlight-hero-tagline">The EQ Eight you know and love — now fully dynamic.</p> <div class="spotlight-button-deck"> <a href="https://www.patreon.com/davesuonabene" target="_blank" rel="noopener noreferrer" class="spotlight-cta-btn spotlight-cta-primary" id="cta-patreon-btn"> <span>Get the Alpha on Patreon</span> <span class="spotlight-arrow" aria-hidden="true">↗</span> </a> <button type="button" class="spotlight-cta-btn spotlight-cta-secondary" id="cta-notify-modal-trigger"> <span>Send to me when it's ready</span> </button> </div> </div> <footer class="spotlight-bottom-bar"> <a href="/" class="spotlight-origin-link"> <span>davesuonabene.github.io</span> <span class="spotlight-arrow" aria-hidden="true">↗</span> </a> </footer> </div> </main> <div class="spotlight-modal-overlay" id="notify-modal" aria-hidden="true"> <div class="spotlight-modal-dialog"> <button class="spotlight-modal-close" id="modal-close-btn" aria-label="Close modal">×</button> <div class="spotlight-modal-header"> <h2 class="spotlight-modal-title">Get dEQ Eight in your inbox</h2> <p class="spotlight-modal-desc">Leave your email and receive the first free release directly in your inbox the moment it's ready.</p> </div> <div class="spotlight-modal-body"> <div class="spotlight-modal-input-row" id="modal-input-row"> <input type="email" id="modal-email-input" class="spotlight-modal-input" placeholder="your.email@example.com"> <button type="button" class="spotlight-cta-btn spotlight-cta-primary" id="modal-submit-btn"> <span>Submit</span> </button> </div> <p class="spotlight-modal-msg" id="modal-status-msg"></p> <div class="spotlight-modal-patreon-note" id="modal-patreon-note" style="display: none;"> <a href="https://www.patreon.com/davesuonabene" target="_blank" rel="noopener noreferrer" class="spotlight-modal-patreon-link"> <span>want to get Early Access? Support the development on Patreon</span> <span class="spotlight-arrow" aria-hidden="true">↗</span> </a> </div> </div> </div> </div> <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Modal triggers & handlers
+        const trigger = document.getElementById('cta-notify-modal-trigger');
+        const modal = document.getElementById('notify-modal');
+        const closeBtn = document.getElementById('modal-close-btn');
+        const submitBtn = document.getElementById('modal-submit-btn');
+        const emailInput = document.getElementById('modal-email-input');
+        const statusMsg = document.getElementById('modal-status-msg');
+        const inputRow = document.getElementById('modal-input-row');
+        const patreonNote = document.getElementById('modal-patreon-note');
+
+        if (trigger && modal) {
+          trigger.addEventListener('click', () => {
+            modal.classList.add('is-open');
+            modal.setAttribute('aria-hidden', 'false');
+            if (inputRow) inputRow.style.display = 'flex';
+            if (patreonNote) patreonNote.style.display = 'none';
+            if (statusMsg) statusMsg.textContent = '';
+            if (emailInput) {
+              emailInput.value = '';
+              emailInput.focus();
+            }
+          });
+        }
+
+        function closeModal() {
+          if (modal) {
+            modal.classList.remove('is-open');
+            modal.setAttribute('aria-hidden', 'true');
+          }
+        }
+
+        if (closeBtn) closeBtn.addEventListener('click', closeModal);
+        if (modal) {
+          modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+          });
+        }
+
+        if (submitBtn && emailInput && statusMsg) {
+          const formAction = "https://docs.google.com/forms/d/e/1FAIpQLSdrEYixFVkwXDpt36a2X5V5LX-9KOYpd6jEaVveJ-MwYIyKzw/formResponse";
+          const formEntry = "entry.235927503";
+
+          async function handleSubscribe() {
+            const email = emailInput.value.trim();
+            if (!email || !email.includes('@')) {
+              statusMsg.textContent = '[ERR] Please provide a valid email.';
+              return;
+            }
+
+            submitBtn.disabled = true;
+            statusMsg.textContent = 'Sending...';
+
+            try {
+              if (formAction && formEntry) {
+                const body = new URLSearchParams();
+                body.append(formEntry, email);
+                await fetch(formAction, {
+                  method: 'POST',
+                  mode: 'no-cors',
+                  headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                  },
+                  body: body.toString()
+                });
+              }
+              statusMsg.textContent = "[OK] You're on the list! We will send you the first version upon release.";
+              emailInput.value = '';
+              if (inputRow) inputRow.style.display = 'none';
+              if (patreonNote) patreonNote.style.display = 'block';
+            } catch (err) {
+              statusMsg.textContent = '[ERR] Submission failed. Please try again.';
+            } finally {
+              submitBtn.disabled = false;
+            }
+          }
+
+          submitBtn.addEventListener('click', handleSubscribe);
+          emailInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              handleSubscribe();
+            }
+          });
+        }
+      });
+    </script> </body> </html>
