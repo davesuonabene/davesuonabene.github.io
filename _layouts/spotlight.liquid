@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="{{ site.lang }}">
+  <head>
+    {% include head.liquid %}
+  </head>
+  <body class="spotlight-body">
+    {% assign p = site.data.spotlight %}
+
+    <main class="spotlight-fullscreen" role="main">
+      <!-- Background Layer (Video, Custom Image, or Stylized Atmosphere) -->
+      <div
+        class="spotlight-bg {% if p.hero_image == blank and p.hero_video == blank %}spotlight-bg-default{% endif %}"
+        {% if p.hero_image != blank and p.hero_video == blank %}
+          style="background-image: url('{{ p.hero_image | relative_url }}');"
+        {% endif %}
+      >
+        {% if p.hero_video %}
+          <div class="spotlight-video-wrapper">
+            <video
+              autoplay
+              loop
+              muted
+              playsinline
+              preload="auto"
+              poster="{% if p.hero_video.poster %}{{ p.hero_video.poster | relative_url }}{% endif %}"
+              class="spotlight-video"
+            >
+              {% if p.hero_video.webm %}
+                <source src="{{ p.hero_video.webm | relative_url }}" type="video/webm">
+              {% endif %}
+              {% if p.hero_video.mp4 %}
+                <source src="{{ p.hero_video.mp4 | relative_url }}" type="video/mp4">
+              {% endif %}
+            </video>
+          </div>
+        {% endif %}
+        <div class="spotlight-overlay"></div>
+      </div>
+
+      <!-- Bottom-Offset Swiss / Terminal Hero Content -->
+      <div class="spotlight-content-wrapper">
+        <div class="spotlight-hero-box">
+          {% if p.subtitle != blank %}
+            <div class="spotlight-meta-row">
+              <span class="spotlight-hero-subtitle">{{ p.subtitle }}</span>
+            </div>
+          {% endif %}
+
+          <h1 class="spotlight-hero-title">{{ p.title }}</h1>
+
+          {% if p.tagline != blank %}
+            <p class="spotlight-hero-tagline">{{ p.tagline }}</p>
+          {% endif %}
+
+          <!-- Action Buttons Deck -->
+          <div class="spotlight-button-deck">
+            <!-- Patreon Alpha CTA -->
+            <a
+              href="{{ p.patreon.url }}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="spotlight-cta-btn spotlight-cta-primary"
+              id="cta-patreon-btn"
+            >
+              <span>{{ p.patreon.label }}</span>
+              <span class="spotlight-arrow" aria-hidden="true">&#8599;</span>
+            </a>
+
+            <!-- Subscription CTA: "Send to me when it's ready" -->
+            {% if p.subscription.google_form_url != blank %}
+              <a
+                href="{{ p.subscription.google_form_url }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="spotlight-cta-btn spotlight-cta-secondary"
+                id="cta-subscribe-btn"
+              >
+                <span>{{ p.subscription.label }}</span>
+                <span class="spotlight-arrow" aria-hidden="true">&#8599;</span>
+              </a>
+            {% else %}
+              <button
+                type="button"
+                class="spotlight-cta-btn spotlight-cta-secondary"
+                id="cta-notify-modal-trigger"
+              >
+                <span>{{ p.subscription.label }}</span>
+              </button>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Single Bottom Divider & Website Link (Right Aligned) -->
+        <footer class="spotlight-bottom-bar">
+          {% if p.site_link %}
+            <a href="{{ p.site_link.url | relative_url }}" class="spotlight-origin-link">
+              <span>{{ p.site_link.label }}</span>
+              <span class="spotlight-arrow" aria-hidden="true">&#8599;</span>
+            </a>
+          {% endif %}
+        </footer>
+      </div>
+    </main>
+
+    <!-- Lightweight Email Subscription Modal -->
+    <div class="spotlight-modal-overlay" id="notify-modal" aria-hidden="true">
+      <div class="spotlight-modal-dialog">
+        <button class="spotlight-modal-close" id="modal-close-btn" aria-label="Close modal">&times;</button>
+        <div class="spotlight-modal-header">
+          <h2 class="spotlight-modal-title">{{ p.subscription.modal_title }}</h2>
+          <p class="spotlight-modal-desc">{{ p.subscription.modal_description }}</p>
+        </div>
+        <div class="spotlight-modal-body">
+          <div class="spotlight-modal-input-row" id="modal-input-row">
+            <input
+              type="email"
+              id="modal-email-input"
+              class="spotlight-modal-input"
+              placeholder="your.email@example.com"
+            >
+            <button type="button" class="spotlight-cta-btn spotlight-cta-primary" id="modal-submit-btn">
+              <span>Submit</span>
+            </button>
+          </div>
+          <p class="spotlight-modal-msg" id="modal-status-msg"></p>
+          <div class="spotlight-modal-patreon-note" id="modal-patreon-note" style="display: none;">
+            <a
+              href="{{ p.patreon.url }}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="spotlight-modal-patreon-link"
+            >
+              <span>want to get Early Access? Support the development on Patreon</span>
+              <span class="spotlight-arrow" aria-hidden="true">&#8599;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Modal triggers & handlers
+        const trigger = document.getElementById('cta-notify-modal-trigger');
+        const modal = document.getElementById('notify-modal');
+        const closeBtn = document.getElementById('modal-close-btn');
+        const submitBtn = document.getElementById('modal-submit-btn');
+        const emailInput = document.getElementById('modal-email-input');
+        const statusMsg = document.getElementById('modal-status-msg');
+        const inputRow = document.getElementById('modal-input-row');
+        const patreonNote = document.getElementById('modal-patreon-note');
+
+        if (trigger && modal) {
+          trigger.addEventListener('click', () => {
+            modal.classList.add('is-open');
+            modal.setAttribute('aria-hidden', 'false');
+            if (inputRow) inputRow.style.display = 'flex';
+            if (patreonNote) patreonNote.style.display = 'none';
+            if (statusMsg) statusMsg.textContent = '';
+            if (emailInput) {
+              emailInput.value = '';
+              emailInput.focus();
+            }
+          });
+        }
+
+        function closeModal() {
+          if (modal) {
+            modal.classList.remove('is-open');
+            modal.setAttribute('aria-hidden', 'true');
+          }
+        }
+
+        if (closeBtn) closeBtn.addEventListener('click', closeModal);
+        if (modal) {
+          modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+          });
+        }
+
+        if (submitBtn && emailInput && statusMsg) {
+          const formAction = {{ p.subscription.google_form_action | jsonify }};
+          const formEntry = {{ p.subscription.google_form_entry | jsonify }};
+
+          async function handleSubscribe() {
+            const email = emailInput.value.trim();
+            if (!email || !email.includes('@')) {
+              statusMsg.textContent = '[ERR] Please provide a valid email.';
+              return;
+            }
+
+            submitBtn.disabled = true;
+            statusMsg.textContent = 'Sending...';
+
+            try {
+              if (formAction && formEntry) {
+                const body = new URLSearchParams();
+                body.append(formEntry, email);
+                await fetch(formAction, {
+                  method: 'POST',
+                  mode: 'no-cors',
+                  headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                  },
+                  body: body.toString()
+                });
+              }
+              statusMsg.textContent = "[OK] You're on the list! We will send you the first version upon release.";
+              emailInput.value = '';
+              if (inputRow) inputRow.style.display = 'none';
+              if (patreonNote) patreonNote.style.display = 'block';
+            } catch (err) {
+              statusMsg.textContent = '[ERR] Submission failed. Please try again.';
+            } finally {
+              submitBtn.disabled = false;
+            }
+          }
+
+          submitBtn.addEventListener('click', handleSubscribe);
+          emailInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              handleSubscribe();
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

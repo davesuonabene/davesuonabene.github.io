@@ -1,0 +1,37 @@
+# Spotlight Project Configuration
+# Update this file whenever you want to feature a new project or change copy.
+
+id: "deq-eight"
+title: "dEQ Eight"
+subtitle: "Max for Live Device"
+tagline: "The EQ Eight you know and love — now fully dynamic."
+
+# Top right exit link to original site
+site_link:
+  url: "/"
+  label: "davesuonabene.github.io"
+
+# Background Media:
+# Place your hero image in assets/img/ (e.g. assets/img/eq8_hero.jpg)
+# Or configure hero_video for an optimized looping background video.
+hero_image: ""
+
+hero_video:
+  webm: "assets/video/dEQ_HQ_169.webm"
+  mp4: "assets/video/dEQ_HQ_169.mp4"
+  poster: "assets/video/dEQ_HQ_169_poster.jpg"
+
+# Action Buttons:
+patreon:
+  url: "https://www.patreon.com/davesuonabene"
+  label: "Get the Alpha on Patreon"
+
+subscription:
+  label: "Send to me when it's ready"
+  modal_title: "Get dEQ Eight in your inbox"
+  modal_description: "Leave your email and receive the first free release directly in your inbox the moment it's ready."
+  # Headless Google Form configuration (submits directly from the custom modal via fetch):
+  google_form_action: "https://docs.google.com/forms/d/e/1FAIpQLSdrEYixFVkwXDpt36a2X5V5LX-9KOYpd6jEaVveJ-MwYIyKzw/formResponse"
+  google_form_entry: "entry.235927503"
+  # Optional: If set, clicking the main button opens this URL directly instead of the modal:
+  google_form_url: ""

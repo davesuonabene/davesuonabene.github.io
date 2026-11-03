@@ -40,20 +40,71 @@ layout: default
 
     <div class="clearfix">{{ content }}</div>
 
-    <!-- News -->
-    {% if page.announcements and page.announcements.enabled %}
-      <h2>
-        <a href="{{ '/news/' | relative_url }}" style="color: inherit">news</a>
-      </h2>
-      {% include news.liquid limit=true %}
+    {% if page.hero_image %}
+      <div class="hero-image my-4">
+        <img
+          src="{{ page.hero_image | relative_url }}"
+          alt="{{ page.hero_image_alt | default: site.title }}"
+          class="img-fluid rounded border"
+          loading="eager"
+          style="width: 100%; display: block;"
+        >
+      </div>
+    {% endif %}
+
+    <!-- Featured Projects -->
+    {% if page.featured_projects and page.featured_projects.enabled or page.latest_works and page.latest_works.enabled %}
+      {% assign featured_projects = site.projects | where: "featured", true | sort: "importance" %}
+      {% if featured_projects.size > 0 %}
+        <div class="mt-5 mb-4">
+          <h2>featured</h2>
+          {% for project in featured_projects %}
+            <div class="card p-3 mt-3 border">
+              {% if project.type or project.category %}
+                <div class="d-flex justify-content-end align-items-center mb-1">
+                  <span class="text-muted" style="font-family: var(--global-font-family-mono, monospace); font-size: 0.75rem; letter-spacing: 0.05em; text-transform: lowercase;">
+                    {{ project.type | default: project.category }}
+                  </span>
+                </div>
+              {% endif %}
+              <h3 class="card-title my-1" style="font-size: 1.35rem; font-weight: 700;">
+                <a href="{% if project.redirect %}{{ project.redirect }}{% else %}{{ project.url | relative_url }}{% endif %}" class="project-title-link">
+                  {{ project.title }}
+                </a>
+              </h3>
+              {% if project.description %}
+                <p class="card-text text-muted mb-2" style="font-size: 0.95rem;">
+                  {{ project.description }}
+                </p>
+              {% endif %}
+              {% if project.year %}
+                {% assign project_year = project.year %}
+              {% elsif project.date %}
+                {% assign project_year = project.date | date: "%Y" %}
+              {% else %}
+                {% assign project_year = nil %}
+              {% endif %}
+              {% if project_year and project_year != "" %}
+                <div class="d-flex justify-content-end align-items-center mt-2">
+                  <span class="text-muted" style="font-family: var(--global-font-family-mono, monospace); font-size: 0.75rem;">
+                    {{ project_year }}
+                  </span>
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
     {% endif %}
 
     <!-- Latest posts -->
     {% if page.latest_posts and page.latest_posts.enabled %}
-      <h2>
-        <a href="{{ '/blog/' | relative_url }}" style="color: inherit">latest posts</a>
-      </h2>
-      {% include latest_posts.liquid %}
+      <div class="mt-4 mb-4">
+        <h2>
+          <a href="{{ '/blog/' | relative_url }}" style="color: inherit">latest posts</a>
+        </h2>
+        {% include latest_posts.liquid %}
+      </div>
     {% endif %}
 
     <!-- Selected papers -->

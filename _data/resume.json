@@ -14,6 +14,7 @@
       "url": "",
       "startDate": "2024-06",
       "endDate": "",
+      "category": "continuous",
       "summary": "Fonico FOH e stage manager per concerti, dj set e conferenze.",
       "highlights": [
         "Gestione completa del fronte palco e coordinamento tecnico degli eventi.",
@@ -23,12 +24,24 @@
       ]
     },
     {
+      "name": "Life Club",
+      "location": "",
+      "position": "Tecnico audio",
+      "url": "",
+      "startDate": "2024",
+      "endDate": "",
+      "category": "continuous",
+      "summary": "",
+      "highlights": []
+    },
+    {
       "name": "Cyclops VR – Excalibar",
       "location": "Milano",
       "position": "Tecnico VR",
       "url": "",
       "startDate": "2023-03",
       "endDate": "2024-06",
+      "category": "continuous",
       "summary": "Supporto tecnico per esperienze in realtà virtuale ed eventi privati.",
       "highlights": [
         "Gestione tecnica di esperienze in realtà virtuale per feste ed eventi privati.",
@@ -43,7 +56,30 @@
       "url": "",
       "startDate": "2025-01",
       "endDate": "2025-12",
+      "category": "single",
       "summary": "Supporto backline e gestione tecnica audio/luci per eventi.",
+      "highlights": []
+    },
+    {
+      "name": "Teslight",
+      "location": "",
+      "position": "Tecnico audio / luci",
+      "url": "",
+      "startDate": "",
+      "endDate": "",
+      "category": "single",
+      "summary": "",
+      "highlights": []
+    },
+    {
+      "name": "Play Group",
+      "location": "",
+      "position": "Tecnico audio / luci",
+      "url": "",
+      "startDate": "",
+      "endDate": "",
+      "category": "single",
+      "summary": "",
       "highlights": []
     },
     {
@@ -53,6 +89,7 @@
       "url": "",
       "startDate": "2022-01",
       "endDate": "",
+      "category": "continuous",
       "summary": "Supporto tecnico audio/video e sviluppo di contenuti interattivi con TouchDesigner.",
       "highlights": []
     },
@@ -63,6 +100,7 @@
       "url": "",
       "startDate": "2025-06",
       "endDate": "2025-06",
+      "category": "single",
       "summary": "Supporto backline e allestimento palco per concerto.",
       "highlights": []
     },
@@ -73,6 +111,7 @@
       "url": "",
       "startDate": "2025-06",
       "endDate": "2025-07",
+      "category": "single",
       "summary": "Gestione audio e palco per gli eventi della rassegna estiva.",
       "highlights": []
     },
@@ -83,6 +122,7 @@
       "url": "",
       "startDate": "2021-01",
       "endDate": "2024-12",
+      "category": "continuous",
       "summary": "Produzione musicale, recording e beatmaking per artisti e pubblicità.",
       "highlights": []
     }

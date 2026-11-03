@@ -1,0 +1,519 @@
+/*****************************
+ * Custom Personal Layer
+ * All project-specific visual overrides and fixes
+ * are placed here to keep al-folio template files clean.
+ *****************************/
+
+// Responsive Date Column for CV (Work, Education, Volunteer)
+.date-column {
+  width: 100% !important;
+  max-width: 100%;
+  transform: none !important;
+  margin-bottom: 0.5rem;
+
+  .table-cv {
+    margin: 0 auto;
+  }
+}
+
+// Allow location text to wrap naturally instead of overflowing columns
+p.location {
+  white-space: normal !important;
+  word-break: break-word;
+  margin-top: 0.25rem;
+  line-height: 1.2;
+}
+
+/*****************************
+ * Fullscreen Spotlight Hero
+ * Swiss Style / Terminal Blank Monocolor Edition
+ *****************************/
+
+$spotlight-mono: "SFMono-Regular", "JetBrains Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+$spotlight-sans: "Helvetica Neue", Helvetica, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+
+/* Base layout & full-screen container (Always unified terminal dark palette) */
+.spotlight-body {
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: #0c0e12 !important;
+  color: #f1f3f5 !important;
+  font-family: $spotlight-sans;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.spotlight-fullscreen {
+  position: relative;
+  width: 100vw;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  padding: 2.25rem 2.5rem 1.75rem 2.5rem;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    padding: 1.75rem 1.25rem 1.25rem 1.25rem;
+  }
+}
+
+/* Background layer & uniform semi-transparent shade (no vertical vignette) */
+.spotlight-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.spotlight-bg-default {
+  background: #0c0e12;
+}
+
+/* Video Background Layer */
+.spotlight-video-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.spotlight-video {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* Mobile & Portrait Orientation:
+ * Preserves the full 16:9 audio device interface without cropping the side controls.
+ * Applies a smooth horizontal panning animation across the full width.
+ */
+@media (max-width: 768px), (orientation: portrait) {
+  .spotlight-video-wrapper {
+    overflow: hidden;
+  }
+
+  .spotlight-video {
+    top: 0;
+    left: 0;
+    height: 100% !important;
+    min-height: 100% !important;
+    width: auto !important;
+    min-width: calc(100vh * 16 / 9) !important;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    transform: translateX(0);
+    will-change: transform;
+    animation: spotlight-video-pan 18s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+  }
+
+  @supports (height: 100dvh) {
+    .spotlight-video {
+      min-width: calc(100dvh * 16 / 9) !important;
+    }
+  }
+
+  @keyframes spotlight-video-pan {
+    0% {
+      transform: translateX(0);
+    }
+    12% {
+      transform: translateX(0);
+    }
+    88% {
+      transform: translateX(calc(100vw - 100%));
+    }
+    100% {
+      transform: translateX(calc(100vw - 100%));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .spotlight-video {
+      animation: none !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+    }
+  }
+}
+
+/* Flat uniform transparency — no vertical vignette */
+.spotlight-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(12, 14, 18, 0.45);
+  z-index: 2;
+}
+
+.spotlight-arrow {
+  font-family: $spotlight-mono;
+  font-size: 0.85em;
+  line-height: 1;
+}
+
+/* Top-Left (Desktop) / Top-Center (Mobile) Hero & Bottom Footer Wrapper */
+.spotlight-content-wrapper {
+  position: relative;
+  z-index: 10;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.spotlight-hero-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  border: none;
+
+  @media (max-width: 768px) {
+    align-items: center;
+    text-align: center;
+  }
+}
+
+.spotlight-meta-row {
+  display: flex;
+  align-items: center;
+  font-family: $spotlight-mono;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #b0b7c0;
+  margin-bottom: 0.45rem;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
+}
+
+.spotlight-hero-subtitle {
+  margin: 0;
+  font-weight: 500;
+}
+
+.spotlight-hero-title {
+  font-family: $spotlight-sans;
+  font-size: clamp(2.4rem, 5.5vw, 3.8rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+  color: #f1f3f5;
+  margin: 0 0 0.65rem 0;
+}
+
+.spotlight-hero-tagline {
+  font-family: $spotlight-mono;
+  font-size: clamp(0.82rem, 1.3vw, 0.92rem);
+  max-width: 520px;
+  color: #c9cfd6;
+  margin: 0 0 1.25rem 0;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+/* Button Deck: High-Contrast Monocolor Terminal Controls */
+.spotlight-button-deck {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 0.65rem;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
+}
+
+.spotlight-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  font-family: $spotlight-mono;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.2rem;
+  border-radius: 0;
+  text-decoration: none !important;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+/* Primary Button: Solid White -> Solid Dark on Hover (Modal Submit) */
+.spotlight-cta-primary,
+a.spotlight-cta-primary,
+button.spotlight-cta-primary {
+  background-color: #f1f3f5 !important;
+  color: #0c0e12 !important;
+  border: 1px solid #f1f3f5 !important;
+
+  span {
+    color: #0c0e12 !important;
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: #0c0e12 !important;
+    color: #f1f3f5 !important;
+    border-color: #f1f3f5 !important;
+
+    span {
+      color: #f1f3f5 !important;
+    }
+  }
+}
+
+/* Patreon CTA: Lights up Patreon Brand Color (#ff424d) on Hover */
+#cta-patreon-btn {
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: #ff424d !important;
+    color: #ffffff !important;
+    border-color: #ff424d !important;
+
+    span {
+      color: #ffffff !important;
+    }
+  }
+}
+
+/* Secondary Button: Solid Dark Surface -> Solid White on Hover */
+.spotlight-cta-secondary,
+a.spotlight-cta-secondary,
+button.spotlight-cta-secondary {
+  background-color: rgba(12, 14, 18, 0.88) !important;
+  color: #f1f3f5 !important;
+  border: 1px solid rgba(241, 243, 245, 0.55) !important;
+
+  span {
+    color: #f1f3f5 !important;
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: #f1f3f5 !important;
+    color: #0c0e12 !important;
+    border-color: #f1f3f5 !important;
+
+    span {
+      color: #0c0e12 !important;
+    }
+  }
+}
+
+/* Single Bottom Divider & Right-Aligned Website Link */
+.spotlight-bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(241, 243, 245, 0.24);
+  font-family: $spotlight-mono;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+}
+
+.spotlight-origin-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #b0b7c0 !important;
+  text-decoration: none !important;
+  text-transform: lowercase;
+  transition: color 0.15s ease;
+
+  span {
+    color: inherit !important;
+  }
+
+  &:hover,
+  &:focus {
+    color: #f1f3f5 !important;
+  }
+}
+
+/* Modal Overlay & Box */
+.spotlight-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(12, 14, 18, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+
+  &.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.spotlight-modal-dialog {
+  position: relative;
+  border-radius: 0;
+  width: 100%;
+  max-width: 460px;
+  padding: 2rem;
+  text-align: left;
+  font-family: $spotlight-mono;
+  background: #0c0e12;
+  border: 1px solid #f1f3f5;
+  color: #f1f3f5;
+}
+
+.spotlight-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  background: none;
+  border: none;
+  font-family: $spotlight-mono;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.25rem;
+  color: #8b929a;
+
+  &:hover {
+    color: #f1f3f5;
+  }
+}
+
+.spotlight-modal-title {
+  font-family: $spotlight-sans;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #f1f3f5;
+  margin: 0 0 0.5rem 0;
+}
+
+.spotlight-modal-desc {
+  font-family: $spotlight-mono;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: #9aa1a9;
+  margin: 0 0 1.5rem 0;
+}
+
+.spotlight-modal-input-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.spotlight-modal-input {
+  flex: 1 1 200px;
+  padding: 0.75rem 0.9rem;
+  border-radius: 0;
+  font-family: $spotlight-mono;
+  font-size: 0.8rem;
+  outline: none;
+  background: #0c0e12;
+  color: #f1f3f5;
+  border: 1px solid rgba(241, 243, 245, 0.45);
+
+  &:focus {
+    border-color: #f1f3f5;
+  }
+}
+
+.spotlight-modal-msg {
+  font-family: $spotlight-mono;
+  font-size: 0.8rem;
+  color: #f1f3f5;
+  margin: 0.75rem 0 0 0;
+  min-height: 1.1rem;
+  line-height: 1.45;
+}
+
+.spotlight-modal-patreon-note {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(241, 243, 245, 0.22);
+}
+
+.spotlight-modal-patreon-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: $spotlight-mono;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #ff424d !important;
+  text-decoration: none !important;
+  line-height: 1.45;
+  transition: opacity 0.15s ease;
+
+  span {
+    color: inherit !important;
+  }
+
+  &:hover,
+  &:focus {
+    opacity: 0.85;
+    text-decoration: underline !important;
+  }
+}
+
+/* Minimalist Featured Project Cards */
+.project-title-link {
+  color: var(--global-text-color) !important;
+  text-decoration: none !important;
+  transition: opacity 0.15s ease;
+
+  &:hover,
+  &:focus {
+    color: var(--global-text-color) !important;
+    text-decoration: underline !important;
+    opacity: 0.7;
+  }
+}
+
+
+
+

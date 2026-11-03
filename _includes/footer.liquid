@@ -1,14 +1,22 @@
 {% capture footer_contents %}
-  &copy; Copyright {{ site.time | date: '%Y' }}
-  {{ site.first_name }}
-  {{ site.middle_name }}
-  {{ site.last_name }}. {{ site.footer_text }}
-  {% if site.impressum_path %}
-    <a href="{{ site.url }}{{ site.baseurl }}{{ site.impressum_path }}">Impressum</a>.
-  {% endif %}
-  {% if site.last_updated %}
-    Last updated: {{ 'now' | date: '%B %d, %Y' }}.
-  {% endif %}
+  <div class="footer-links mb-2 text-lowercase" style="font-family: var(--global-font-family-mono, monospace); font-size: 0.82rem; letter-spacing: 0.03em;">
+    <a href="{{ '/cv/' | relative_url }}">cv</a>
+    <span class="mx-2 text-muted">&middot;</span>
+    <a href="{{ '/repositories/' | relative_url }}">repositories</a>
+    <span class="mx-2 text-muted">&middot;</span>
+    <a href="mailto:{{ site.email | default: 'davesuonabene@gmail.com' }}">contact</a>
+    <span class="mx-2 text-muted">&middot;</span>
+    <a href="{{ '/privacy/' | relative_url }}">privacy policy</a>
+  </div>
+  <div class="footer-text">
+    &copy; Copyright {{ site.time | date: '%Y' }}
+    {{ site.first_name }}
+    {{ site.middle_name }}
+    {{ site.last_name }}. {{ site.footer_text }}
+    {% if site.last_updated %}
+      Last updated: {{ 'now' | date: '%B %d, %Y' }}.
+    {% endif %}
+  </div>
 {% endcapture %}
 
 {% if site.footer_fixed %}

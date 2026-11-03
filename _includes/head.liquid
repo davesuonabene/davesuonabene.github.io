@@ -82,6 +82,10 @@
   <script>
     initTheme();
   </script>
+{% else %}
+  <script>
+    document.documentElement.setAttribute("data-theme", "light");
+  </script>
 {% endif %}
 
 {% if page.map %}

@@ -1,0 +1,212 @@
+#!/bin/bash
+
+# Exit on error
+set -e
+
+# Detect Homebrew prefix
+if command -v brew &> /dev/null; then
+    BREW_PREFIX=$(brew --prefix)
+else
+    # Fallback to standard paths on Mac
+    if [ -d "/opt/homebrew" ]; then
+        BREW_PREFIX="/opt/homebrew"
+    else
+        BREW_PREFIX="/usr/local"
+    fi
+fi
+
+# Set PATH to prioritize Homebrew Ruby 3.3
+export PATH="${BREW_PREFIX}/opt/ruby@3.3/bin:${BREW_PREFIX}/lib/ruby/gems/3.3.0/bin:$PATH"
+
+# Color constants for premium CLI feedback
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+
+log_info() {
+    echo -e "${BLUE}[INFO]${NC} $1"
+}
+
+log_success() {
+    echo -e "${GREEN}[SUCCESS]${NC} $1"
+}
+
+log_warning() {
+    echo -e "${YELLOW}[WARNING]${NC} $1"
+}
+
+log_error() {
+    echo -e "${RED}[ERROR]${NC} $1"
+}
+
+# Slugify title for filenames
+slugify() {
+    echo "$1" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/-\{1,\}/-/g' | sed 's/^-//;s/-$//'
+}
+
+show_help() {
+    echo -e "Jekyll Work Diary Management Tool"
+    echo -e "Usage: ./bin/diary <command> [arguments]"
+    echo -e ""
+    echo -e "Commands:"
+    echo -e "  ${BLUE}setup${NC}          Install Homebrew Ruby 3.3, Bundler, and Jekyll project dependencies."
+    echo -e "  ${BLUE}serve${NC}          Start the Jekyll development server with LiveReload on port 8080."
+    echo -e "  ${BLUE}new \"Title\"${NC}    Create a new post template and a corresponding assets/img folder."
+    echo -e "  ${BLUE}list${NC}           List the 10 most recent posts."
+    echo -e "  ${BLUE}help${NC}           Show this help message."
+}
+
+cmd_setup() {
+    log_info "Starting environment setup..."
+
+    # Check for Homebrew
+    if ! command -v brew &> /dev/null; then
+        log_error "Homebrew is not installed. Please install Homebrew first: https://brew.sh"
+        exit 1
+    fi
+
+    # Check if Ruby 3.3 is installed via Brew
+    if [ ! -d "${BREW_PREFIX}/opt/ruby@3.3" ]; then
+        log_info "Installing Ruby 3.3 via Homebrew..."
+        brew install ruby@3.3
+    else
+        log_info "Ruby 3.3 is already installed via Homebrew."
+    fi
+
+    # Upgrade/install Bundler
+    log_info "Installing / updating Bundler..."
+    gem install bundler --no-document
+
+    # Install Jekyll gems
+    log_info "Installing Jekyll dependencies from Gemfile..."
+    bundle install
+
+    log_success "Environment setup successfully!"
+    log_info "You can now run './bin/diary serve' to start your local site."
+}
+
+cmd_serve() {
+    # Check if bundle command exists
+    if ! command -v bundle &> /dev/null; then
+        log_warning "Bundler not found in PATH. Attempting to locate Homebrew Ruby..."
+        if [ ! -d "${BREW_PREFIX}/opt/ruby@3.3" ]; then
+            log_error "Homebrew Ruby 3.3 is not installed. Please run './bin/diary setup' first."
+            exit 1
+        fi
+    fi
+
+    log_info "Starting Jekyll server on http://localhost:8080..."
+    
+    # Auto-open browser in the background after 4 seconds
+    (
+        sleep 4
+        if command -v open &> /dev/null; then
+            log_info "Opening browser..."
+            open http://localhost:8080
+        fi
+    ) &
+
+    # Serve the site
+    bundle exec jekyll serve --watch --port=8080 --host=0.0.0.0 --livereload
+}
+
+cmd_new() {
+    local title="$1"
+    if [ -z "$title" ]; then
+        echo -n "Enter post title: "
+        read -r title
+    fi
+
+    if [ -z "$title" ]; then
+        log_error "Title cannot be empty."
+        exit 1
+    fi
+
+    local slug
+    slug=$(slugify "$title")
+    local date_str
+    date_str=$(date "+%Y-%m-%d")
+    local time_str
+    time_str=$(date "+%Y-%m-%d %H:%M:%S %z")
+
+    local filename="_posts/${date_str}-${slug}.md"
+    local asset_dir="assets/img/posts/${date_str}-${slug}"
+
+    if [ -f "$filename" ]; then
+        log_error "A post already exists at $filename"
+        exit 1
+    fi
+
+    # Create directories
+    mkdir -p "$asset_dir"
+    mkdir -p "_posts"
+
+    # Write Markdown template
+    cat <<EOF > "$filename"
+---
+layout: post
+title: "${title}"
+date: ${time_str}
+description: "Describe today's work here"
+tags: [creative, daily-update]
+categories: [work]
+# thumbnail: assets/img/posts/${date_str}-${slug}/thumbnail.jpg
+# giscus_comments: false
+---
+
+Today's updates and accomplishments.
+
+## Accomplishments
+- Bullet point 1
+- Bullet point 2
+
+## Images / Gallery
+Place your creative images in: \`/${asset_dir}/\`
+
+To display an image from that folder, use the following code:
+{% include figure.liquid path="assets/img/posts/${date_str}-${slug}/your-image.png" class="img-fluid rounded z-depth-1" zoomable=true caption="Caption describing the image" %}
+EOF
+
+    log_success "Created post: $filename"
+    log_success "Created asset directory: $asset_dir"
+    
+    # Prompt to open the file
+    if command -v open &> /dev/null; then
+        log_info "Opening new post in default editor..."
+        open "$filename"
+    fi
+}
+
+cmd_list() {
+    log_info "Listing the 10 most recent posts:"
+    echo "--------------------------------------------------"
+    find _posts -name "*.md" | sort -r | head -n 10 | while read -r file; do
+        # Extract title from front matter
+        local title
+        title=$(grep -m 1 "^title:" "$file" | sed -E 's/^title:[[:space:]]*["'\'']?//;s/["'\'']?[[:space:]]*$//')
+        echo -e "${GREEN}$(basename "$file" .md)${NC} - ${title}"
+    done
+    echo "--------------------------------------------------"
+}
+
+# Main routing
+case "${1:-}" in
+    setup)
+        cmd_setup
+        ;;
+    serve|start)
+        cmd_serve
+        ;;
+    new|create)
+        shift
+        cmd_new "$*"
+        ;;
+    list)
+        cmd_list
+        ;;
+    help|""|*)
+        show_help
+        ;;
+esac

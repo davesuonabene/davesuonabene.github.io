@@ -11,3 +11,9 @@ assets/libs/
 node_modules/
 vendor
 .idea
+.agent
+.agent/
+.agents
+.agents/
+_template_archive
+_template_archive/

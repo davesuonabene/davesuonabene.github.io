@@ -1,15 +1,33 @@
-<ul class="card-text font-weight-light list-group list-group-flush">
+<div class="card-text font-weight-light">
   {% assign work = data[1] | sort: 'startDate' | reverse %}
-  {% assign main_work = work | where_exp: 'item', 'item.highlights and item.highlights.size > 0' %}
-  {% assign other_work = work | where_exp: 'item', 'item.highlights == empty' %}
+  
+  {% assign current_work = '' | split: '' %}
+  {% assign past_work = '' | split: '' %}
+  {% assign event_work = '' | split: '' %}
+  
+  {% for content in work %}
+    {% if content.category == 'single' or content.category == 'event' or content.category == 'events' %}
+      {% assign event_work = event_work | push: content %}
+    {% elsif content.category == 'past' %}
+      {% assign past_work = past_work | push: content %}
+    {% elsif content.category == 'current' or content.endDate == blank or content.endDate == '' or content.endDate == nil %}
+      {% assign current_work = current_work | push: content %}
+    {% else %}
+      {% assign past_work = past_work | push: content %}
+    {% endif %}
+  {% endfor %}
 
   {%- comment -%}
-    Main experiences (with bullet points / highlights)
+    1. Current / In corso
   {%- endcomment -%}
-  {% for content in main_work %}
-    <li class="list-group-item">
-      <div class="row">
-        <div class="col-xs-2 cl-sm-2 col-md-2 text-center date-column">
+  {% if current_work.size > 0 %}
+    <div class="work-section mb-4">
+      <h6 class="text-uppercase font-weight-bold mb-3" style="font-size: 0.85rem; letter-spacing: 0.06rem; color: var(--global-theme-color);">
+        <i class="fa-solid fa-circle-dot mr-2 fa-sm"></i>
+        In corso
+      </h6>
+      <ul class="list-group list-group-flush">
+        {% for content in current_work %}
           {% if content.startDate %}
             {% assign startDate = content.startDate | split: '-' | slice: 0, 2 | join: '.' %}
             {% assign endDate = content.endDate | split: '-' | slice: 0, 2 | join: '.' | default: 'Present' %}
@@ -22,101 +40,169 @@
           {% else %}
             {% assign date = '' %}
           {% endif %}
-          <table class="table-cv">
-            <tbody>
-              <tr>
-                <td>
-                  <span class="badge font-weight-bold danger-color-dark text-uppercase align-middle" style="min-width: 75px"> {{ date }} </span>
-                </td>
-              </tr>
-              {% if content.location %}
-                <tr>
-                  <td>
-                    <p class="location">
-                      <i class="fa-solid fa-location-dot iconlocation"></i>
-                      {{ content.location }}
-                    </p>
-                  </td>
-                </tr>
-              {% endif %}
-            </tbody>
-          </table>
-        </div>
-        <div class="col-xs-10 cl-sm-10 col-md-10 mt-2 mt-md-0">
-          <h6 class="title font-weight-bold ml-1 ml-md-4">
-            <a href="{{ content.url }}">{{ content.position }}</a>
-          </h6>
-          <h6 class="ml-1 ml-md-4" style="font-size: 0.95rem">{{ content.name }}</h6>
-          <h6 class="ml-1 ml-md-4" style="font-size: 0.95rem; font-style: italic">{{ content.summary }}</h6>
-          <ul class="items">
-            {% for item in content.highlights %}
-              <li>
-                <span class="item">{{ item }}</span>
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
-      </div>
-    </li>
-  {% endfor %}
+          {% assign location = content.location %}
+          <li class="list-group-item py-3">
+            <div class="d-flex justify-content-between align-items-start flex-wrap flex-sm-nowrap">
+              <div class="text-left pr-3">
+                {% if content.name %}
+                  <div class="font-weight-bold" style="font-size: 1.05rem;">
+                    {% if content.url != blank and content.url != '' %}
+                      <a href="{{ content.url }}" target="_blank" rel="noopener noreferrer">{{ content.name }}</a>
+                    {% else %}
+                      {{ content.name }}
+                    {% endif %}
+                  </div>
+                {% endif %}
+                {% if content.position %}
+                  <div style="font-style: italic; color: var(--global-text-color-light); font-size: 0.95rem;">
+                    {{ content.position }}
+                  </div>
+                {% endif %}
+              </div>
+              <div class="text-right flex-shrink-0 mt-1 mt-sm-0">
+                {% if date != '' %}
+                  <div>
+                    <span class="badge font-weight-bold danger-color-dark text-uppercase align-middle">
+                      {{ date }}
+                    </span>
+                  </div>
+                {% endif %}
+                {% if location and location != '' %}
+                  <div class="location" style="font-size: 0.75rem; color: var(--global-text-color-light); margin-top: 0.2rem;">
+                    <i class="fa-solid fa-location-dot fa-xs"></i> {{ location }}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
 
   {%- comment -%}
-    Condensed "Other experiences" list for single-line roles (without highlights)
+    2. Past / Passate
   {%- endcomment -%}
-  {% if other_work and other_work.size > 0 %}
-    <li class="list-group-item">
-      <div class="row">
-        <div class="col-12">
-          <h6 class="title font-weight-bold ml-1 ml-md-0 mb-2">Other experiences</h6>
-          <ul class="items">
-            {% for content in other_work %}
-              {% if content.startDate %}
-                {% assign startDate = content.startDate | split: '-' | slice: 0, 2 | join: '.' %}
-                {% assign endDate = content.endDate | split: '-' | slice: 0, 2 | join: '.' | default: 'Present' %}
-                {% if content.endDate and content.startDate == content.endDate %}
-                  {% assign date = startDate %}
-                {% else %}
-                  {% assign date = startDate | append: ' - ' %}
-                  {% assign date = date | append: endDate %}
+  {% if past_work.size > 0 %}
+    <div class="work-section mb-4 pt-2">
+      <h6 class="text-uppercase font-weight-bold mb-3" style="font-size: 0.85rem; letter-spacing: 0.06rem; color: var(--global-theme-color);">
+        <i class="fa-solid fa-clock-rotate-left mr-2 fa-sm"></i>
+        Passate
+      </h6>
+      <ul class="list-group list-group-flush">
+        {% for content in past_work %}
+          {% if content.startDate %}
+            {% assign startDate = content.startDate | split: '-' | slice: 0, 2 | join: '.' %}
+            {% assign endDate = content.endDate | split: '-' | slice: 0, 2 | join: '.' | default: 'Present' %}
+            {% if content.endDate and content.startDate == content.endDate %}
+              {% assign date = startDate %}
+            {% else %}
+              {% assign date = startDate | append: ' - ' %}
+              {% assign date = date | append: endDate %}
+            {% endif %}
+          {% else %}
+            {% assign date = '' %}
+          {% endif %}
+          {% assign location = content.location %}
+          <li class="list-group-item py-3">
+            <div class="d-flex justify-content-between align-items-start flex-wrap flex-sm-nowrap">
+              <div class="text-left pr-3">
+                {% if content.name %}
+                  <div class="font-weight-bold" style="font-size: 1.05rem;">
+                    {% if content.url != blank and content.url != '' %}
+                      <a href="{{ content.url }}" target="_blank" rel="noopener noreferrer">{{ content.name }}</a>
+                    {% else %}
+                      {{ content.name }}
+                    {% endif %}
+                  </div>
                 {% endif %}
-              {% else %}
-                {% assign date = '' %}
-              {% endif %}
-              {% assign location = content.location | default: 'Milano' %}
-              <li>
-                <div class="d-flex justify-content-between">
-                  <div class="text-left">
-                    {% if content.name %}
-                      <div class="font-weight-bold">
-                        {{ content.name }}
-                      </div>
-                    {% endif %}
-                    {% if content.position %}
-                      <div style="font-style: italic;">
-                        {{ content.position }}
-                      </div>
-                    {% endif %}
+                {% if content.position %}
+                  <div style="font-style: italic; color: var(--global-text-color-light); font-size: 0.95rem;">
+                    {{ content.position }}
                   </div>
-                  <div class="text-right">
-                    {% if date != '' %}
-                      <div>
-                        <span class="badge font-weight-bold danger-color-dark text-uppercase align-middle">
-                          {{ date }}
-                        </span>
-                      </div>
-                    {% endif %}
-                    {% if location %}
-                      <div class="location">
-                        {{ location }}
-                      </div>
-                    {% endif %}
+                {% endif %}
+              </div>
+              <div class="text-right flex-shrink-0 mt-1 mt-sm-0">
+                {% if date != '' %}
+                  <div>
+                    <span class="badge font-weight-bold danger-color-dark text-uppercase align-middle">
+                      {{ date }}
+                    </span>
                   </div>
-                </div>
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
-      </div>
-    </li>
+                {% endif %}
+                {% if location and location != '' %}
+                  <div class="location" style="font-size: 0.75rem; color: var(--global-text-color-light); margin-top: 0.2rem;">
+                    <i class="fa-solid fa-location-dot fa-xs"></i> {{ location }}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
   {% endif %}
-</ul>
+
+  {%- comment -%}
+    3. Events / Eventi
+  {%- endcomment -%}
+  {% if event_work.size > 0 %}
+    <div class="work-section mt-4 pt-2">
+      <h6 class="text-uppercase font-weight-bold mb-3" style="font-size: 0.85rem; letter-spacing: 0.06rem; color: var(--global-theme-color);">
+        <i class="fa-solid fa-calendar-check mr-2 fa-sm"></i>
+        Eventi e collaborazioni
+      </h6>
+      <ul class="list-group list-group-flush">
+        {% for content in event_work %}
+          {% if content.startDate %}
+            {% assign startDate = content.startDate | split: '-' | slice: 0, 2 | join: '.' %}
+            {% assign endDate = content.endDate | split: '-' | slice: 0, 2 | join: '.' | default: 'Present' %}
+            {% if content.endDate and content.startDate == content.endDate %}
+              {% assign date = startDate %}
+            {% else %}
+              {% assign date = startDate | append: ' - ' %}
+              {% assign date = date | append: endDate %}
+            {% endif %}
+          {% else %}
+            {% assign date = '' %}
+          {% endif %}
+          {% assign location = content.location %}
+          <li class="list-group-item py-3">
+            <div class="d-flex justify-content-between align-items-start flex-wrap flex-sm-nowrap">
+              <div class="text-left pr-3">
+                {% if content.name %}
+                  <div class="font-weight-bold" style="font-size: 1.05rem;">
+                    {% if content.url != blank and content.url != '' %}
+                      <a href="{{ content.url }}" target="_blank" rel="noopener noreferrer">{{ content.name }}</a>
+                    {% else %}
+                      {{ content.name }}
+                    {% endif %}
+                  </div>
+                {% endif %}
+                {% if content.position %}
+                  <div style="font-style: italic; color: var(--global-text-color-light); font-size: 0.95rem;">
+                    {{ content.position }}
+                  </div>
+                {% endif %}
+              </div>
+              <div class="text-right flex-shrink-0 mt-1 mt-sm-0">
+                {% if date != '' %}
+                  <div>
+                    <span class="badge font-weight-bold danger-color-dark text-uppercase align-middle">
+                      {{ date }}
+                    </span>
+                  </div>
+                {% endif %}
+                {% if location and location != '' %}
+                  <div class="location" style="font-size: 0.75rem; color: var(--global-text-color-light); margin-top: 0.2rem;">
+                    <i class="fa-solid fa-location-dot fa-xs"></i> {{ location }}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+</div>

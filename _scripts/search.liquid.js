@@ -54,6 +54,7 @@ ninja.data = [
   {%- endfor -%}
   {%- if site.posts_in_search -%}
     {%- for post in site.posts -%}
+      {%- if post.hidden -%}{%- continue -%}{%- endif -%}
       {
         {%- assign title = post.title | escape | strip -%}
         id: "post-{{ title | slugify }}",
