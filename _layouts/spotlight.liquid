@@ -1,6 +1,14 @@
 <!doctype html>
 <html lang="{{ site.lang }}">
   <head>
+    <meta name="theme-color" content="#0c0e12">
+    <style>
+      html,
+      body {
+        background-color: #0c0e12;
+        color: #f1f3f5;
+      }
+    </style>
     {% include head.liquid %}
   </head>
   <body class="spotlight-body">
@@ -90,8 +98,12 @@
           </div>
         </div>
 
-        <!-- Single Bottom Divider & Website Link (Right Aligned) -->
+        <!-- Single Bottom Divider: Return to GAIA & Website Link -->
         <footer class="spotlight-bottom-bar">
+          <a href="{{ p.gaia_link.url | default: '/gaia/' | relative_url }}" class="spotlight-gaia-link">
+            <span class="spotlight-arrow" aria-hidden="true">&larr;</span>
+            <span>{{ p.gaia_link.label | default: 'go back to GAIA' }}</span>
+          </a>
           {% if p.site_link %}
             <a href="{{ p.site_link.url | relative_url }}" class="spotlight-origin-link">
               <span>{{ p.site_link.label }}</span>

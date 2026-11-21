@@ -1,0 +1,76 @@
+# GAIA 3D Landing Page Configuration
+# Structural UI labels and spatial project container coordinates.
+
+title: "a world of projects"
+
+site_link:
+  url: "/"
+  label: "davesuonabene.github.io"
+
+world:
+  radius: 1.55
+  terrain_amplitude: 0.12
+  idle_speed: 0.042
+
+# Archetype: "container" (minimal Swiss architectural container seated on terrain)
+
+objects:
+  - id: "deq"
+    code: "01"
+    label: "dEQ"
+    url: "/dEQ/"
+    external: false
+    lat: 18
+    lon: 14
+    archetype: "container"
+    accent: "#f1f3f5"
+
+  # - id: "blog"
+  #   code: "02"
+  #   label: "blog"
+  #   url: "/blog/"
+  #   external: false
+  #   lat: -22
+  #   lon: 108
+  #   archetype: "container"
+  #   accent: "#f1f3f5"
+
+  # - id: "home"
+  #   code: "03"
+  #   label: "home"
+  #   url: "/"
+  #   external: false
+  #   lat: 36
+  #   lon: -118
+  #   archetype: "container"
+  #   accent: "#f1f3f5"
+
+  # - id: "cv"
+  #   code: "04"
+  #   label: "cv"
+  #   url: "/cv/"
+  #   external: false
+  #   lat: -34
+  #   lon: -52
+  #   archetype: "container"
+  #   accent: "#f1f3f5"
+
+  # - id: "repositories"
+  #   code: "05"
+  #   label: "repositories"
+  #   url: "/repositories/"
+  #   external: false
+  #   lat: 10
+  #   lon: 162
+  #   archetype: "container"
+  #   accent: "#f1f3f5"
+
+  # - id: "contact"
+  #   code: "06"
+  #   label: "contact"
+  #   url: "mailto:davesuonabene@gmail.com"
+  #   external: true
+  #   lat: -12
+  #   lon: -150
+  #   archetype: "container"
+  #   accent: "#f1f3f5"

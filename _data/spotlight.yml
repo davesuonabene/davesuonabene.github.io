@@ -6,7 +6,11 @@ title: "dEQ Eight"
 subtitle: "Max for Live Device"
 tagline: "The EQ Eight you know and love — now fully dynamic."
 
-# Top right exit link to original site
+# Bottom links: return to GAIA and exit link to original site
+gaia_link:
+  url: "/gaia/"
+  label: "go back to GAIA"
+
 site_link:
   url: "/"
   label: "davesuonabene.github.io"

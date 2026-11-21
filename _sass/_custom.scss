@@ -57,7 +57,7 @@ $spotlight-sans: "Helvetica Neue", Helvetica, -apple-system, BlinkMacSystemFont,
   overflow: hidden;
 
   @media (max-width: 768px) {
-    padding: 1.75rem 1.25rem 1.25rem 1.25rem;
+    padding: max(1.75rem, env(safe-area-inset-top)) 1.25rem max(1.25rem, env(safe-area-inset-bottom)) 1.25rem;
   }
 }
 
@@ -338,16 +338,36 @@ button.spotlight-cta-secondary {
   }
 }
 
-/* Single Bottom Divider & Right-Aligned Website Link */
+/* Single Bottom Divider: Return to GAIA (Left) & Website Link (Right) */
 .spotlight-bottom-bar {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
   padding-top: 0.85rem;
   border-top: 1px solid rgba(241, 243, 245, 0.24);
   font-family: $spotlight-mono;
   font-size: 0.75rem;
   letter-spacing: 0.04em;
+}
+
+.spotlight-gaia-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #b0b7c0 !important;
+  text-decoration: none !important;
+  transition: color 0.15s ease;
+
+  span {
+    color: inherit !important;
+  }
+
+  &:hover,
+  &:focus {
+    color: #f1f3f5 !important;
+  }
 }
 
 .spotlight-origin-link {

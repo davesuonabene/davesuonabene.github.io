@@ -1,4 +1,9 @@
 {% capture footer_contents %}
+  {% if page.collection == 'projects' %}
+    <div class="footer-gaia-back mb-2" style="font-family: var(--global-font-family-mono, monospace); font-size: 0.82rem; letter-spacing: 0.03em;">
+      <a href="{{ '/gaia/' | relative_url }}">&larr; go back to GAIA</a>
+    </div>
+  {% endif %}
   <div class="footer-links mb-2 text-lowercase" style="font-family: var(--global-font-family-mono, monospace); font-size: 0.82rem; letter-spacing: 0.03em;">
     <a href="{{ '/cv/' | relative_url }}">cv</a>
     <span class="mx-2 text-muted">&middot;</span>

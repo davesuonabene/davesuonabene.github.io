@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="{{ site.lang }}">
+  <head>
+    <meta name="theme-color" content="#0c0e12">
+    <style>
+      html,
+      body {
+        background-color: #0c0e12;
+        color: #f1f3f5;
+      }
+    </style>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js" crossorigin>
+    {% include head.liquid %}
+    <noscript>
+      <style>
+        .gaia-fallback {
+          display: flex !important;
+        }
+      </style>
+    </noscript>
+  </head>
+  <body class="gaia-body">
+    {% assign g = site.data.gaia %}
+
+    <main class="gaia-viewport" id="gaia-viewport" role="main">
+      <!-- WebGL 3D Canvas Mount -->
+      <div class="gaia-canvas-mount" id="gaia-canvas-mount" role="region" aria-label="Interactive 3D GAIA globe"></div>
+
+      <!-- Projected 2D Spatial Pins -->
+      <div class="gaia-markers-layer" id="gaia-markers-layer"></div>
+
+      <!-- Minimal Swiss / Terminal Perimeter HUD -->
+      <div class="gaia-hud">
+        <header class="gaia-top-bar">
+          <div class="gaia-top-left">
+            <h1 class="gaia-wordmark">{{ g.title }}</h1>
+          </div>
+        </header>
+
+        <footer class="gaia-bottom-bar">
+          <nav class="gaia-index" id="gaia-index" aria-label="GAIA destinations">
+            {% for obj in g.objects %}
+              <button type="button" class="gaia-index-btn" data-object-id="{{ obj.id }}" data-object-index="{{ forloop.index0 }}">
+                <span class="gaia-index-code">[{{ obj.code }}]</span>
+                <span class="gaia-index-label">{{ obj.label }}</span>
+              </button>
+            {% endfor %}
+          </nav>
+
+          {% if g.site_link %}
+            <a href="{{ g.site_link.url | relative_url }}" class="gaia-origin-link">
+              <span>{{ g.site_link.label }}</span>
+              <span class="gaia-marker-arrow" aria-hidden="true">&#8599;</span>
+            </a>
+          {% endif %}
+        </footer>
+      </div>
+
+      <!-- Fallback Directory (Shown if WebGL or JS is unavailable) -->
+      <div class="gaia-fallback" id="gaia-fallback" hidden>
+        <div class="gaia-fallback-card">
+          <h2 class="gaia-fallback-title">{{ g.title }}</h2>
+          <ul class="gaia-fallback-list">
+            {% for obj in g.objects %}
+              {% if obj.external or obj.url contains '://' or obj.url contains 'mailto:' %}
+                {% assign fallback_url = obj.url %}
+              {% else %}
+                {% assign fallback_url = obj.url | relative_url %}
+              {% endif %}
+              <li>
+                <a
+                  href="{{ fallback_url }}"
+                  class="gaia-fallback-link"
+                  {% if obj.external %}
+                    target="_blank" rel="noopener noreferrer"
+                  {% endif %}
+                >
+                  <span>[{{ obj.code }}] {{ obj.label }}</span>
+                  <span aria-hidden="true">&#8599;</span>
+                </a>
+              </li>
+            {% endfor %}
+            {% if g.site_link %}
+              <li>
+                <a href="{{ g.site_link.url | relative_url }}" class="gaia-fallback-link">
+                  <span>{{ g.site_link.label }}</span>
+                  <span aria-hidden="true">&#8599;</span>
+                </a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Navigation Fade Veil -->
+      <div class="gaia-transition-veil" id="gaia-transition-veil" aria-hidden="true"></div>
+    </main>
+
+    <script id="gaia-config" type="application/json">
+      {
+        "world": {{ g.world | jsonify }},
+        "objects": [
+          {%- for obj in g.objects -%}
+            {%- if obj.external or obj.url contains '://' or obj.url contains 'mailto:' -%}
+              {%- assign resolved_url = obj.url -%}
+            {%- else -%}
+              {%- assign resolved_url = obj.url | relative_url -%}
+            {%- endif -%}
+            {
+              "id": {{ obj.id | jsonify }},
+              "code": {{ obj.code | jsonify }},
+              "label": {{ obj.label | jsonify }},
+              "url": {{ resolved_url | jsonify }},
+              "external": {{ obj.external | default: false | jsonify }},
+              "lat": {{ obj.lat | default: 0 | jsonify }},
+              "lon": {{ obj.lon | default: 0 | jsonify }},
+              "archetype": {{ obj.archetype | default: "container" | jsonify }},
+              "accent": {{ obj.accent | default: "#f1f3f5" | jsonify }}
+            }{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        ]
+      }
+    </script>
+
+    <script type="module" src="{{ '/assets/js/gaia.js' | relative_url | bust_file_cache }}"></script>
+  </body>
+</html>
