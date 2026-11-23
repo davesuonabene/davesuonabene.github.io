@@ -9,12 +9,12 @@ ninja.data = [{
     handler: () => {
       window.location.href = "/";
     },
-  },{id: "nav-deq",
-          title: "dEQ",
-          description: "Project Highlight: Dynamic EQ Eight for Ableton Live (Max for Live).",
+  },{id: "nav-gaia",
+          title: "GAIA",
+          description: "a world of projects",
           section: "Navigation",
           handler: () => {
-            window.location.href = "/dEQ/";
+            window.location.href = "/gaia/";
           },
         },{id: "nav-blog",
           title: "blog",
